@@ -3,11 +3,11 @@ from copy import *
 
 def sortowanie_1(lista):
     zakres = len(lista) - 1
-    for j in range(zakres):
+    for i in range(zakres):
         flaga = 1
-        for i in range(zakres):
-            if lista[i+1] < lista[i]:
-                lista[i+1], lista[i] = lista[i], lista[i+1]
+        for j in range(zakres):
+            if lista[j+1] < lista[j]:
+                lista[j+1], lista[j] = lista[j], lista[j+1]
                 flaga = 0
         if flaga == 1:
             break
@@ -24,12 +24,11 @@ def sortowanie_2(lista):
     print("sortowanie 2: ",lista_2)
 
 lista = []
-dlugosc_listy = 20
+dlugosc_listy = 100
 for i in range(dlugosc_listy):
-    lista.append(randint(-10, 10))
+    lista.append(randint(-100, 100))
 print("Lista do sortowania: ",lista)
 lista_1 = copy(lista)
 lista_2 = copy(lista)
 sortowanie_1(lista_1)
 sortowanie_2(lista_2)
-

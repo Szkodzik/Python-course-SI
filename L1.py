@@ -5,7 +5,7 @@ def sortowanie_1(lista):
     zakres = len(lista) - 1
     for i in range(zakres):
         flaga = 1
-        for j in range(zakres):
+        for j in range(zakres - i):
             if lista[j+1] < lista[j]:
                 lista[j+1], lista[j] = lista[j], lista[j+1]
                 flaga = 0

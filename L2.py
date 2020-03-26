@@ -17,20 +17,13 @@ def trzy_pierwsze_wartosci(lista, wp):
     return indeksy, wartosci
 
 def sortowanie_1(lista,wp):
-    indeksy, wartosci = trzy_pierwsze_wartosci(lista, wp)
-    indeksy_wartosci = []
-    index = []
-    for k in range(len(indeksy)):
-        indeksy_wartosci.append([indeksy[k],wartosci[k]])
-
-    zakres = len(indeksy_wartosci) - 1
+    index, wartosci = trzy_pierwsze_wartosci(lista, wp)
+    zakres = len(wartosci) - 1
     for i in range(zakres):
-        for j in range(zakres):
-            if indeksy_wartosci[j+1][1] > indeksy_wartosci[j][1]:
-                indeksy_wartosci[j+1], indeksy_wartosci[j] = indeksy_wartosci[j], indeksy_wartosci[j+1]
-
-    for i in range(len(indeksy_wartosci)):
-        index.append(indeksy_wartosci[i][0])
+        for j in range(zakres-i):
+            if wartosci[j + 1] > wartosci[j]:
+                wartosci[j + 1], wartosci[j] = wartosci[j], wartosci[j + 1]
+                index[j + 1], index[j] = index[j], index[j + 1]
 
     return index
 

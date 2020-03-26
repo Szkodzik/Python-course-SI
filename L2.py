@@ -1,12 +1,13 @@
 from random import *
 from copy import *
+import time
 
 def trzy_pierwsze_wartosci(lista, wp):
     indeksy = []
     wartosci = []
     licznik = 0
     for i in range(len(lista)):
-        if lista[i] >= wp:
+        if lista[i] > wp:
             indeksy.append(i)
             wartosci.append(lista[i])
             licznik += 1
@@ -47,15 +48,21 @@ def sortowanie_2(lista,wp):
     return index
 
 lista = []
-dlugosc_listy = 10
-wartosc_progowa = 5
+dlugosc_listy = 100
+wartosc_progowa = 6
 for i in range(dlugosc_listy):
-    lista.append(randint(0, 10))
+    lista.append(round(uniform(-10, 10),2))
 print("Dane: ", lista)
 print("Wartość progowa: ", wartosc_progowa)
+start = time.clock()
 lista_1 = copy(lista)
+stop = time.clock()
+czas1 = stop - start
+start = time.clock()
 lista_2 = copy(lista)
+stop = time.clock()
+czas2 = stop - start
 x = sortowanie_1(lista_1, wartosc_progowa)
 y = sortowanie_2(lista_2, wartosc_progowa)
-print("3 pierwsze indeksy posortowane sortowaniem 1: ", x)
-print("3 pierwsze indeksy posortowane sortowaniem 2: ", y)
+print("3 pierwsze indeksy (sortowanie 1): ", x, "czas: ", '%.7f' % czas1)
+print("3 pierwsze indeksy (sortowanie 2): ", y, "czas: ", '%.7f' % czas2)

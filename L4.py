@@ -33,18 +33,32 @@ name = ['bitbay', 'blockchain', 'cex', 'bitstamp']
 buy = [buy_bitbay, buy_blockchain, buy_cex, float(buy_bitstamp)]
 sell = [sell_bitbay, sell_blockchain, sell_cex, float(sell_bitstamp)]
 
-for i in range(len(taker)):
-    buy[i] = buy[i] * taker[i]
-    sell[i] = sell[i] * taker[i]
-print(buy)
-print(sell)
 count = 0
+amount_BTC = 0.1
+possible_transactions = []
+profits = []
+for i in range(len(taker)):
+    buy[i] = buy[i] * taker[i] * amount_BTC
+    sell[i] = sell[i] * taker[i] * amount_BTC
+
 for i in range(len(buy)):
     for j in range(len(sell)):
         if buy[i] < sell[j] and i != j:
-            print('na giełdzie ', name[i], 'można kupić 1 BTC po kursie', '%.2f' % buy[i], 'i sprzedać na giełdzie ',
-                  name[j], 'po kursie ', '%.2f' % sell[j], 'zyskując ', '%.2f' % (sell[j] - buy[i]), 'USD')
+            profit = sell[j] - buy[i]
+            print('Na giełdzie', name[i], 'można kupić', amount_BTC, 'BTC po kursie', '%.2f' % buy[i], 'i sprzedać na giełdzie',
+                  name[j], 'po kursie', '%.2f' % sell[j], 'zyskując', '%.2f' % profit, 'USD')
+            possible_transactions.append([name[i], name[j]])
+            profits.append(profit)
             count += 1
 if count == 0:
     print('brak możliwości arbitrażu')
+else:
+    best = profits.index(max(profits))
+    print("\nZostała przeprowadzona najlepsza z możliwych tranzakcji: \n"
+          "Kupno na girłdzie", possible_transactions[best][0], 'i sprzedaż na giełdzie', possible_transactions[best][1],
+          '\nzyskując:', '%.2f' % profits[best], 'USD')
+
+
+
+
 

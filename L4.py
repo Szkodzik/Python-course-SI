@@ -39,7 +39,7 @@ possible_transactions = []
 profits = []
 for i in range(len(taker)):
     buy[i] = buy[i] * taker[i] * amount_BTC
-    sell[i] = sell[i] * taker[i] * amount_BTC
+    sell[i] = sell[i] * (2 - taker[i]) * amount_BTC
 
 for i in range(len(buy)):
     for j in range(len(sell)):

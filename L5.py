@@ -34,40 +34,32 @@ def profit(money):
         data_max = [BTC_max, BCC_max, LTC_max, ETH_max, XRP_max]
         volume = [BTC_vol, BCC_vol, LTC_vol, ETH_vol, XRP_vol]
 
-        print(data_min)
-        print(data_max)
-        print(volume)
         difference = []
         for i in range(len(data_min)):
             difference.append(round(((data_max[i] - data_min[i]) / data_min[i] * 100), 2))
 
-        print(difference)
-
-        for i in range(len(difference) - 1):
-            for j in range(len(difference) - 1 - i):
-                if difference[j + 1] > difference[j]:
-                    difference[j + 1], difference[j] = difference[j], difference[j + 1]
-                    name[j + 1], name[j] = name[j], name[j + 1]
-                    volume[j + 1], volume[j] = volume[j], volume[j + 1]
-                    data_min[j + 1], data_min[j] = data_min[j], data_min[j + 1]
-
-        print(name)
-        print(difference)
-
+        data = []
         for i in range(len(name)):
-            if difference[i] >= 0:
-                print(name[i], '+', difference[i], '%')
+            data.append([name[i], data_min[i], data_max[i], volume[i], difference[i]])
+
+        for i in range(len(data) - 1):
+            for j in range(len(data) - 1 - i):
+                if data[j + 1][4] > data[j][4]:
+                    data[j + 1], data[j] = data[j], data[j + 1]
+
+        for i in range(len(data)):
+            if data[i][4] >= 0:
+                print(data[i][0], '+', data[i][4], '%')
             else:
-                print(name[i], difference[i], '%')
+                print(data[i][0], data[i][4], '%')
 
-        for i in range(len(name)):
-            if money > 0 and volume[i] * data_min[i] <= money:
-                price = volume[i] * data_min[i]
+        for i in range(len(data)):
+            if money > 0 and data[i][3] * data[i][1] <= money:
+                price = data[i][3] * data[i][1]
                 money = money - price
-                print("Kupiłeś", name[i], 'za', '%.2f' % price, 'USD\n','Pozostało', money, 'USD')
+                print("Kupiłeś", data[i][0], 'za', '%.2f' % price, 'USD\n','Pozostało', money, 'USD')
             elif money == 0:
                 print('Brak pieniędzy')
-
 
         print('\n', 30 * '-', '\n')
         time.sleep(300)

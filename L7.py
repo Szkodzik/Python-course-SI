@@ -2,6 +2,7 @@ import requests
 import json
 import matplotlib.pyplot as plt
 import random
+from copy import *
 
 request = requests.get('https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY&symbol=BTC&market=USD&apikey=DQHTDT7WB9NVTARN')
 request = request.json()
@@ -18,23 +19,12 @@ for i in range(len(list_data)):
 print("Podaj od której daty program ma przewidzieć kolejne 30 dni kursu BTC-USD")
 year = int(input('podaj rok: '))
 month = int(input('podaj miesiąc: '))
-
-if month != 12:
-    next_month = month + 1
-else:
-    next_month = 1
-
 year = str(year)
 
 if month < 10:
     month = '0' + str(month)
 else:
     month = str(month)
-
-if next_month < 10:
-    next_month = '0' + str(next_month)
-else:
-    next_month = str(next_month)
 
 dzien = '01'
 start = year + '-' + month + '-01'
@@ -47,8 +37,6 @@ for i in range(len(list_data)):
         price.append(list_price[i:i+30])
 data = data[0]
 price = price[0]
-
-
 
 def predict(data, price, list_data, list_price):
     pred = []
@@ -96,22 +84,23 @@ def predict_100(data, price, list_data, list_price):
         pred.append(sum(help) / len(list_pred))
     return pred
 
-#pred = predict(data, price, list_data, list_price)
-pred = predict_100(data, price, list_data, list_price)
+pred = predict(data, price, list_data, list_price)
+pred2 = predict_100(data, price, list_data, list_price)
+price2 = copy(price)
 for i in range(len(pred)):
     price.append(pred[i])
-print(price)
-print(len(price))
-d = []
+    price2.append(pred2[i])
 
+days = []
 for i in range(60):
-
-    d.append(-30+i)
+    days.append(-30+i)
 
 plt.figure()
-plt.plot(d,price)
-plt.title('Wykres')
+plt.plot(days, price)
+plt.title('Wykres z 1 symulacją')
+plt.figure()
+plt.plot(days, price2)
+plt.title('Wykres z 100 symulacjami')
 plt.show()
 
 
-#przedstawić wykresy
